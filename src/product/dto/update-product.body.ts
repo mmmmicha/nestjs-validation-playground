@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsOptional,
@@ -18,12 +19,13 @@ export class UpdateProductBodyDto {
         'discountPrice 값이 존재해야만 price 값을 수정할 수 있습니다',
       );
     }
-    return false;
+    return true;
   })
   @IsOptional()
   @IsInt()
   @Min(0)
   @Max(Number.MAX_SAFE_INTEGER)
+  // @Type(() => String)
   public price?: number;
 
   @ValidateIf((obj) => {
@@ -32,11 +34,12 @@ export class UpdateProductBodyDto {
         'price 값이 존재해야만 discountPrice 값을 수정할 수 있습니다',
       );
     }
-    return false;
+    return true;
   })
   @IsOptional()
   @IsInt()
   @Min(0)
   @Max(Number.MAX_SAFE_INTEGER)
+  // @Type(() => String)
   public discountPrice?: number;
 }
